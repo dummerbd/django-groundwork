@@ -1,0 +1,66 @@
+{% load static %}
+{% load groundwork_tags %}
+
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block meta %}{% endblock meta %}
+    {% block base_title %}
+    <title>{% block title %}Foundation 5.2.2{% endblock title %}</title>
+    {% endblock base_title %}
+
+    {# Base Foundation CSS #}
+    {% block groundwork_css %}
+    {% groundwork_css "normalize" %}
+    {% groundwork_css "foundation.min" %}
+    {% endblock groundwork_css %}  
+    
+    {# Custom CSS #}
+    {% block css %}{% endblock css %}
+
+    {# Override if you need another version of modernizr #}
+    {% block groundwork_modernizer %}
+    {% groundwork_vendor "modernizr" %}
+    {% endblock groundwork_modernizer %}
+
+    {# Custom head JS #}
+    {% block head_js %}{% endblock head_js %}
+</head>
+<body {% block body_attr %}{% endblock body_attr %}>
+
+    {% block base_messages %}
+    <!-- Messages -->
+    {% for msg in messages %}
+    <div class="row">
+      {% groundwork_alert msg msg.level %}
+    </div>
+    {% endfor %}
+    <!-- End Messages -->
+    {% endblock base_messages %}
+
+    {# Main content goes here #}
+    {% block base_body %}{% endblock base_body %}
+
+    {# Override if you need another version of jQuery #}
+    {% block groundwork_jquery %}
+    {% groundwork_vendor "jquery" %}
+    {% endblock groundwork_jquery %}
+
+    {# Foundation JS #}
+    {% block groundwork_js %}
+    {% groundwork_js %}
+    {% endblock groundwork_js %}
+
+    {# Custom JS #}
+    {% block body_js %}{% endblock body_js %}
+
+    {# Init Foundation #}
+    {% block foundation_js_init %}
+    <script>
+        $(document).foundation();
+    </script>
+    {% endblock foundation_js_init %}
+</body>
+</html>
