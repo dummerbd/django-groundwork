@@ -1,4 +1,3 @@
 include README.rst
-recursive-include groundwork/templatetags *
-recursive-include groundwork/static *
-recursive-include groundwork/templates *
+recursive-include groundwork *
+recursive-include libs *
