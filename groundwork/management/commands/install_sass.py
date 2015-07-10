@@ -3,7 +3,7 @@ install_sass.py - custom command to install LibSass and SassC.
 """
 import os
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__), '../../..')
