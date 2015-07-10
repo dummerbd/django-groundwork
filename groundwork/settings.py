@@ -13,20 +13,20 @@ DEFAULTS = {
         os.path.join(BASE_DIR, 'bin/sassc'),
 
     'GROUNDWORK_SASS_APP':
-        os.path.join(BASE_DIR, 'scss/app.scss'),
+        os.path.join(BASE_DIR, 'groundwork/scss/app.scss'),
 
     'GROUNDWORK_SASS_OUTPUT':
-        os.path.join(settings.STATIC_ROOT, 'css/app.min.css'),
+        os.path.join(settings.STATIC_ROOT  , 'css/app.min.css'),
 
     'GROUNDWORK_SASS_STYLE':
         'compressed',
 
     'GROUNDWORK_FOUNDATION_PATH':
-        os.path.join(BASE_DIR, 'libs/foundation')
+        os.path.join(BASE_DIR, 'libs/foundation/scss')
 }
 
 
-def get_settings(name):
+def get_setting(name):
     """
     Get a defined setting value.
     """
