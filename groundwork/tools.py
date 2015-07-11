@@ -6,6 +6,8 @@ import os
 from os import path
 from contextlib import contextmanager
 
+import jsmin
+
 from groundwork.settings import get_setting
 
 
@@ -110,3 +112,34 @@ def build_sass_project(readline=None):
         out=min_output
     )
     run_external_tool(cmd, readline=readline)
+
+
+def build_js_project(readline=None):
+    """
+    Build the Foundation JS library.
+    """
+    js_root = get_setting('foundation_js_path')
+    output = get_setting('js_output')
+    min_output = get_setting('js_min_output')
+    try:
+        os.makedirs(os.path.dirname(output))
+        os.makedirs(os.path.dirname(min_output))
+    except:
+        pass
+
+    components = get_setting('js_components')
+    get_js_path = lambda c: os.path.join(js_root, 'foundation.%s.js' % c)
+    js_files = [get_js_path(c) for c in components]
+    js_files.insert(0, os.path.join(js_root, 'foundation.js'))
+
+    source = ''
+    for path in js_files:
+        with open(path, 'r') as src_file:
+            source += src_file.read()
+
+    with open(output, 'w+') as output_file:
+        output_file.write(source)
+
+    compressed = jsmin.jsmin(source)
+    with open(min_output, 'w+') as output_file:
+        output_file.write(compressed)
