@@ -2,11 +2,11 @@
 urls.py - routes for test project.
 """
 from django.conf.urls import include, url
-from django.views import TemplateView
+from django.views.generic import TemplateView
 
 
 class DemoView(TemplateView):
-    template_name = 'demo.html'
+    template_name = 'groundwork_demo.html'
 
 
 urlpatterns = [
