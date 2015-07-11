@@ -86,16 +86,27 @@ def build_sass_project(readline=None):
     Build the SASS project defined in the settings.
     """
     output = get_setting('sass_output')
+    min_output = get_setting('sass_min_output')
     try:
         os.makedirs(os.path.dirname(output))
+        os.makedirs(os.path.dirname(min_output))
     except:
         pass
 
-    cmd = '{exec} --style {style} --load-path {path} {app} {out}'.format(
-        exec=get_setting('sassc_executable'),
-        style=get_setting('sass_style'),
-        path=get_setting('foundation_path'),
+    sassc = get_setting('sassc_executable')
+    output = get_setting('sass_output')
+
+    cmd = '{sassc} --style expanded --load-path {path} {app} {out}'.format(
+        sassc=sassc,
+        path=get_setting('foundation_sass_path'),
         app=get_setting('sass_app'),
         out=output
     )
-    run_external_tool(cmd)
+    run_external_tool(cmd, readline=readline)
+
+    cmd = '{sassc} --style compressed {app} {out}'.format(
+        sassc=sassc,
+        app=output,
+        out=min_output
+    )
+    run_external_tool(cmd, readline=readline)
