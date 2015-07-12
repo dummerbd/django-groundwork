@@ -1,0 +1,38 @@
+"""
+groundwork.py - groundwork management command.
+"""
+import sys
+
+from django.core.management.base import BaseCommand
+
+from groundwork import tools
+
+
+class Command(BaseCommand):
+    """
+    Run various tasks for Groundwork.
+    """
+    tools = {
+        'install': tools.InstallTool,
+        'sass': tools.BuildSassTool,
+        'js': tools.BuildJsTool,
+        'build': tools.BuildTool,
+        'watch': tools.WatchTool
+    }
+
+    def add_arguments(self, parser):
+        """
+        Add extra arguments.
+        """
+        parser.add_argument('command', choices=self.tools.keys())
+
+    def handle(self, *args, **options):
+        """
+        Run the command.
+        """
+        tool = self.tools[options['command']](stdout=self.stdout)
+        try:
+            tool.run()
+        except tools.ToolFailureError as e:
+            self.stdout.write('Failed on command: ' + e.command)
+            sys.exit(1)
