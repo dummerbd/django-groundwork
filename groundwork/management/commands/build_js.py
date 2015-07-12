@@ -2,6 +2,7 @@
 build_js.py - builds js project.
 """
 import os
+import sys
 
 from django.core.management.base import BaseCommand
 

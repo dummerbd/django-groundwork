@@ -3,12 +3,14 @@ tools.py - common tasks for installing, configuring, and using external tools.
 """
 import sys
 import os
+import re
 from os import path
 from contextlib import contextmanager
 
 import jsmin
 
 from groundwork.settings import get_setting
+from groundwork.components import get_sass_imports, get_js_files
 
 
 BASE_DIR = path.abspath(path.join(path.dirname(path.abspath(__file__)), '..'))
@@ -95,13 +97,22 @@ def build_sass_project(readline=None):
     except:
         pass
 
-    sassc = get_setting('sassc_executable')
-    output = get_setting('sass_output')
+    app_file = get_setting('sass_app')
+    app_name = re.match(r'^.*/(.*)\.scss$', app_file).groups(1)
+    app_include_path = os.path.dirname(app_file)
 
-    cmd = '{sassc} --style expanded --load-path {path} {app} {out}'.format(
+    include_paths = list(get_setting('sass_include_paths')) + [
+        get_setting('foundation_sass_path'), app_include_path]
+
+    imports = get_sass_imports() + [app_name]
+    app_input = '\n'.join(['@import "%s";' % name for name in imports])
+    includes = ' '.join(['--load-path %s' % path for path in include_paths])
+
+    sassc = get_setting('sassc_executable')
+    cmd = 'echo \'{input}\' | {sassc} --style expanded {includes} --stdin {out}'.format(
+        input=app_input,
         sassc=sassc,
-        path=get_setting('foundation_sass_path'),
-        app=get_setting('sass_app'),
+        includes=includes,
         out=output
     )
     run_external_tool(cmd, readline=readline)
@@ -127,9 +138,7 @@ def build_js_project(readline=None):
     except:
         pass
 
-    components = get_setting('js_components')
-    get_js_path = lambda c: os.path.join(js_root, 'foundation.%s.js' % c)
-    js_files = [get_js_path(c) for c in components]
+    js_files = get_js_files()
     js_files.insert(0, os.path.join(js_root, 'foundation.js'))
 
     source = ''

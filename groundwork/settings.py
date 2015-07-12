@@ -10,34 +10,30 @@ from django.conf import settings
 BASE_DIR = path.abspath(path.join(path.dirname(path.abspath(__file__)), '..'))
 
 
-DEFAULT_JS_COMPONENTS = [
-    'abide', 'accordion', 'alert', 'clearing', 'dropdown', 'equalizer', 'interchange', 'joyride',
-    'magellan', 'offcanvas', 'orbit', 'reveal', 'slider', 'tab', 'tooltip', 'topbar'
-]
-
-
 DEFAULTS = {
+    'GROUNDWORK_COMPONENTS':
+        'all',
+
     'GROUNDWORK_SASSC_EXECUTABLE':
         path.join(BASE_DIR, 'libs/sassc/bin/sassc'),
-
-    'GROUNDWORK_SASS_APP':
-        path.join(BASE_DIR, 'groundwork/scss/app.scss'),
 
     'GROUNDWORK_FOUNDATION_SASS_PATH':
         path.join(BASE_DIR, 'libs/foundation/scss'),
 
-    'GROUNDWORK_SASS_OUTPUT':
-        path.join(settings.STATIC_ROOT, 'css/app.css'),
-
-    'GROUNDWORK_SASS_MIN_OUTPUT':
-        path.join(settings.STATIC_ROOT, 'css/app.min.css'),
-
-
     'GROUNDWORK_FOUNDATION_JS_PATH':
         path.join(BASE_DIR, 'libs/foundation/js/foundation'),
 
-    'GROUNDWORK_JS_COMPONENTS':
-        DEFAULT_JS_COMPONENTS,
+    'GROUNDWORK_SASS_APP':
+        path.join(BASE_DIR, 'groundwork/scss/default.scss'),
+
+    'GROUNDWORK_SASS_INCLUDE_PATHS':
+        [],
+
+    'GROUNDWORK_SASS_OUTPUT':
+        path.join(settings.STATIC_ROOT, 'css/foundation.css'),
+
+    'GROUNDWORK_SASS_MIN_OUTPUT':
+        path.join(settings.STATIC_ROOT, 'css/foundation.min.css'),
 
     'GROUNDWORK_JS_OUTPUT':
         path.join(settings.STATIC_ROOT, 'js/foundation.js'),
