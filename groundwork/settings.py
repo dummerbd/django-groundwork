@@ -23,11 +23,14 @@ DEFAULTS = {
     'GROUNDWORK_FOUNDATION_JS_PATH':
         path.join(BASE_DIR, 'libs/foundation/js/foundation'),
 
+    'GROUNDWORK_SASS_SETTINGS':
+        'default_settings',
+
     'GROUNDWORK_SASS_APP':
-        path.join(BASE_DIR, 'groundwork/scss/default.scss'),
+        'default_app',
 
     'GROUNDWORK_SASS_INCLUDE_PATHS':
-        [],
+        [path.join(BASE_DIR, 'scss')],
 
     'GROUNDWORK_SASS_OUTPUT':
         path.join(settings.STATIC_ROOT, 'css/foundation.css'),

@@ -12,12 +12,11 @@ class Component:
     """
     def __init__(self, js=[], sass=[]):
         """
-        `js` and `sass` should be a list of names such as `accordian`, or `tab`
+        `js` and `sass` should be a list of names such as `accordion`, or `tab`
         that can be formed with the path settings.
         """
         self.js = js
         self.sass = sass
-        self.name = self.__class__.__name__.lower()
 
     @property
     def js_files(self):
@@ -138,7 +137,11 @@ COMPONENTS = {
 
     'visibility':
         Component(sass=['visibility'])
-}   
+}
+
+
+def flatten(lst):
+    return reduce(lambda el, lst: el + lst, lst, [])
 
 
 def get_sass_imports():
@@ -148,11 +151,9 @@ def get_sass_imports():
     components = get_setting('components')
     if components == 'all':
         components = COMPONENTS.keys()
-    return reduce(
-        lambda c, cs: c + cs,
-        (c.sass_imports for n, c in COMPONENTS.items() if n in components),
-        []
-    )
+    imports = flatten((c.sass_imports for n, c in COMPONENTS.items() if n in components))
+    imports.sort()
+    return imports
 
 
 def get_js_files():
@@ -162,8 +163,6 @@ def get_js_files():
     components = get_setting('components')
     if components == 'all':
         components = COMPONENTS.keys()
-    return reduce(
-        lambda c, cs: c + cs,
-        (c.js_files for n, c in COMPONENTS.items() if n in components),
-        []
-    )
+    files = flatten((c.js_files for n, c in COMPONENTS.items() if n in components))
+    files.sort()
+    return files

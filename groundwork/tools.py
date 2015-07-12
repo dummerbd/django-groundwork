@@ -97,14 +97,14 @@ def build_sass_project(readline=None):
     except:
         pass
 
-    app_file = get_setting('sass_app')
-    app_name = re.match(r'^.*/(.*)\.scss$', app_file).groups(1)
-    app_include_path = os.path.dirname(app_file)
+    app_name = get_setting('sass_app')
+    settings_name = get_setting('sass_settings')
 
     include_paths = list(get_setting('sass_include_paths')) + [
-        get_setting('foundation_sass_path'), app_include_path]
-
-    imports = get_sass_imports() + [app_name]
+        get_setting('foundation_sass_path')
+    ]
+    imports = [settings_name] + list(get_sass_imports()) + [app_name]
+    
     app_input = '\n'.join(['@import "%s";' % name for name in imports])
     includes = ' '.join(['--load-path %s' % path for path in include_paths])
 

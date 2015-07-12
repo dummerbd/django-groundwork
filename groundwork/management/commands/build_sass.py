@@ -16,7 +16,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         write = self.stdout.write
 
-        write('Project:    ' + get_setting('sass_app'))
+        write('App:        ' + get_setting('sass_app'))
+        write('Settings:   ' + get_setting('sass_settings'))
+        write('Paths:')
+        [write('            ' + path) for path in get_setting('sass_include_paths')]
+
         try:
             build_sass_project(readline=write)
         except ToolFailureError as e:
