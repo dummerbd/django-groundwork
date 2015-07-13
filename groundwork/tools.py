@@ -14,8 +14,8 @@ from groundwork.components import get_sass_imports, get_js_files
 
 
 BASE_DIR = path.abspath(path.join(path.dirname(path.abspath(__file__)), '..'))
-LIBSass_DIR = path.join(BASE_DIR, 'libs/libsass')
-SassC_DIR = path.join(BASE_DIR, 'libs/sassc')
+LIBSASS_DIR = path.join(BASE_DIR, 'libs/libsass')
+SASSC_DIR = path.join(BASE_DIR, 'libs/sassc')
 
 
 class ToolFailureError(Exception):
@@ -92,11 +92,11 @@ class InstallTool(Tool):
     """
     def run(self, *args, **kwargs):
         self.info('LibSass', 'Building (this can take a few minutes)...')
-        self.run_external_tool('make', LIBSass_DIR)
+        self.run_external_tool('make', LIBSASS_DIR)
 
         self.info('SassC', 'Building...')
-        os.environ['SASS_LIBSASS_PATH'] = LIBSass_DIR
-        self.run_external_tool('make', SassC_DIR)
+        os.environ['SASS_LIBSASS_PATH'] = LIBSASS_DIR
+        self.run_external_tool('make', SASSC_DIR)
 
         self.write('Done')
 
