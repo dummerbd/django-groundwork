@@ -13,7 +13,6 @@ class Command(BaseCommand):
     Run various tasks for Groundwork.
     """
     tools = {
-        'install': tools.InstallTool,
         'sass': tools.BuildSassTool,
         'js': tools.BuildJsTool,
         'build': tools.BuildTool,

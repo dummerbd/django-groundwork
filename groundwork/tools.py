@@ -5,6 +5,7 @@ import sys
 import os
 import re
 from os import path
+from tempfile import NamedTemporaryFile
 from contextlib import contextmanager
 
 import jsmin
@@ -14,8 +15,6 @@ from groundwork.components import get_sass_imports, get_js_files
 
 
 BASE_DIR = path.abspath(path.join(path.dirname(path.abspath(__file__)), '..'))
-LIBSASS_DIR = path.join(BASE_DIR, 'libs/libsass')
-SASSC_DIR = path.join(BASE_DIR, 'libs/sassc')
 
 
 class ToolFailureError(Exception):
@@ -86,25 +85,18 @@ class Tool:
         return output
 
 
-class InstallTool(Tool):
-    """
-    Install libsass and sassc.
-    """
-    def run(self, *args, **kwargs):
-        self.info('LibSass', 'Building (this can take a few minutes)...')
-        self.run_external_tool('make', LIBSASS_DIR)
-
-        self.info('SassC', 'Building...')
-        os.environ['SASS_LIBSASS_PATH'] = LIBSASS_DIR
-        self.run_external_tool('make', SASSC_DIR)
-
-        self.write('Done')
-
-
 class BuildSassTool(Tool):
     """
     Build the Sass project defined in the settings.
     """
+    @contextmanager
+    def app_file_path(self, imports):
+        app_sass = '\n'.join(['@import "%s";' % name for name in imports])
+        with NamedTemporaryFile('w+') as temp:
+            temp.write(app_sass)
+            temp.seek(0)
+            yield temp.name
+
     def run(self, *args, **kwargs):
         self.info('Sass', 'building...')
 
@@ -129,23 +121,20 @@ class BuildSassTool(Tool):
         [self.info(msg=path) for path in include_paths]
 
         imports = [settings_name] + list(get_sass_imports()) + [app_name]
-        app_input = '\n'.join(['@import "%s";' % name for name in imports])
-        includes = ' '.join(['--load-path %s' % path for path in include_paths])
+        includes = ' '.join(['--include-path %s' % path for path in include_paths])
 
         self.info('Output', output)
-        sassc = get_setting('sassc_executable')
-        self.run_external_tool(
-            'echo \'{input}\' | {sassc} --style expanded {includes} --stdin {out}'.format(
-                input=app_input,
-                sassc=sassc,
-                includes=includes,
-                out=output
-        ))
+        with self.app_file_path(imports) as app_file:
+            self.run_external_tool(
+                'sassc --output-style expanded {includes} {app} {out}'.format(
+                    includes=includes,
+                    app=app_file,
+                    out=output
+            ))
 
         self.info('Min Output', min_output)
         self.run_external_tool(
-            '{sassc} --style compressed {app} {out}'.format(
-                sassc=sassc,
+            'sassc --output-style compressed {app} {out}'.format(
                 app=output,
                 out=min_output
         ))

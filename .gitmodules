@@ -1,9 +1,3 @@
 [submodule "libs/foundation"]
 	path = libs/foundation
 	url = git://github.com/zurb/foundation
-[submodule "libs/libsass"]
-	path = libs/libsass
-	url = https://github.com/sass/libsass
-[submodule "libs/sassc"]
-	path = libs/sassc
-	url = https://github.com/sass/sassc

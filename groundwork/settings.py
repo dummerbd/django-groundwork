@@ -14,9 +14,6 @@ DEFAULTS = {
     'GROUNDWORK_COMPONENTS':
         'all',
 
-    'GROUNDWORK_SASSC_EXECUTABLE':
-        path.join(BASE_DIR, 'libs/sassc/bin/sassc'),
-
     'GROUNDWORK_FOUNDATION_SASS_PATH':
         path.join(BASE_DIR, 'libs/foundation/scss'),
 
