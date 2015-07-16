@@ -9,7 +9,7 @@ from django.conf import settings
 BASE_DIR = path.abspath(path.join(path.dirname(path.abspath(__file__)), '..'))
 
 
-if settings.GROUNDWORK_DISTRIBUTION_OUTPUT:
+if getattr(settings, 'GROUNDWORK_DISTRIBUTION_OUTPUT', False):
     output_root = path.join(BASE_DIR, 'groundwork/static/groundwork')
 else:
     output_root = settings.STATIC_ROOT
