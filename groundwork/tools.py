@@ -6,26 +6,25 @@ import os
 import re
 import time
 from os import path
-from tempfile import NamedTemporaryFile
-from contextlib import contextmanager
-
-import jsmin
 
 from groundwork.settings import get_setting
 from groundwork import components
 
+try:
+    from watchdog.observers import Observer
+    from watchdog.events import FileSystemEventHandler as Handler
+except ImportError:
+    pass
 
-BASE_DIR = path.abspath(path.join(path.dirname(path.abspath(__file__)), '..'))
+try:
+    import jsmin
+except ImportError:
+    pass
 
-
-class ToolFailureError(Exception):
-    """
-    Raised when a tool fails.
-    """
-    def __init__(self, exit_code, command, output):
-        self.exit_code = exit_code
-        self.command = command
-        self.output = output
+try:
+    import sass
+except ImportError:
+    pass
 
 
 class Tool:
@@ -49,18 +48,6 @@ class Tool:
         label = label + ':' if label else ''
         self.write('%-15s%s' % (label, msg or ''))
 
-    @contextmanager
-    def change_dir(self, path):
-        """
-        Run commands in the specified directory.
-        """
-        old_path = os.getcwd()
-        os.chdir(path)
-        try:
-            yield
-        finally:
-            os.chdir(old_path)
-
     def get_sass_include_paths(self):
         """
         Get a list of file paths that contain Sass code.
@@ -75,93 +62,63 @@ class Tool:
         return [main_js_file] + list(components.get_js_files())
 
     def makedirs(self, *paths):
-        """
-        Wrapper around `os.makedirs`, fails silently incase directory already
-        exists.
-        """
-        try:
-            for path in paths: os.makedirs(path)
-        except:
-            pass
-
-    def run_external_tool(self, command, in_dir=None, redirect_stderr=True):
-        """
-        Run a shell command.
-        """
-        in_dir = in_dir or BASE_DIR
-        output = ''
-
-        if redirect_stderr:
-            command = command + ' 2>&1'
-
-        with self.change_dir(in_dir):
-            fd = os.popen(command)
-            line = fd.readline()
-            while line:
-                output += line
-                self.info(msg=line)
-                line = fd.readline()
-
-        exit_code = fd.close()
-        if exit_code:
-            raise ToolFailureError(exit_code, command, output)
-
-        return output
+        for p in paths: 
+            os.makedirs(path.dirname(p), exist_ok=True)
 
 
 class BuildSassTool(Tool):
     """
-    Build the Sass project defined in the settings.
+    Build the Sass project defined in the settings. This requires the `libsass`
+    package.
     """
-    @contextmanager
-    def app_file_path(self, imports):
-        app_sass = '\n'.join(['@import "%s";' % name for name in imports])
-        with NamedTemporaryFile('w+') as temp:
-            temp.write(app_sass)
-            temp.seek(0)
-            yield temp.name
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.app = get_setting('sass_app')
+        self.settings = get_setting('sass_settings')
+        self.output = get_setting('sass_output')
+        self.min_output = get_setting('sass_min_output')
+        self.paths = self.get_sass_include_paths()
+        self.imports = [self.settings] + components.get_sass_imports() + [self.app]
+
+    def sass(self, compress=False):
+        if not compress:
+            raw_sass = '\n'.join(['@import "%s";' % name for name in self.imports])
+            options = {
+                'string': raw_sass, 'output_style': 'expanded', 'include_paths': self.paths
+            }
+        else:
+            options = {'filename': self.output, 'output_style': 'compressed'}
+        with open(self.min_output if compress else self.output, 'w+') as fd:
+            try:
+                fd.write(sass.compile(**options))
+            except sass.CompileError as ce:
+                msg = str(ce)
+                self.stdout.write(msg[2:-2].replace(r'\n', '\n'))
+                return False
+        return True
 
     def run(self, *args, **kwargs):
         self.info('Sass', 'building...')
-
-        app_name = get_setting('sass_app')
-        settings_name = get_setting('sass_settings')
-
-        self.info('App', app_name)
-        self.info('Settings', settings_name)
-
-        output, min_output = get_setting('sass_output'), get_setting('sass_min_output')
-        self.makedirs(output, min_output)
-
-        include_paths = self.get_sass_include_paths()
+        self.info('App', self.app)
+        self.info('Settings', self.settings)
         self.info('Paths')
-        for path in include_paths: self.info(msg=path) 
+        for path in self.paths: self.info(msg=path)
+        self.makedirs(self.output, self.min_output)
 
-        imports = [settings_name] + list(components.get_sass_imports()) + [app_name]
-        includes = ' '.join(['--include-path %s' % path for path in include_paths])
+        if not self.sass():
+            return
+        self.info('Output', self.output)
 
-        self.info('Output', output)
-        with self.app_file_path(imports) as app_file:
-            self.run_external_tool(
-                'sassc --output-style expanded {includes} {app} {out}'.format(
-                    includes=includes,
-                    app=app_file,
-                    out=output
-            ))
-
-        self.info('Min Output', min_output)
-        self.run_external_tool(
-            'sassc --output-style compressed {app} {out}'.format(
-                app=output,
-                out=min_output
-        ))
-
+        if not self.sass(True):
+            return
+        self.info('Min Output', self.min_output)
         self.write('Done')
 
 
 class BuildJsTool(Tool):
     """
-    Build the Foundation Js library.
+    Build the Foundation Js library. This requies installing the `jsmin`
+    package.
     """
     def run(self, *args, **kwargs):
         self.info('Js', 'building...')
@@ -211,33 +168,18 @@ class WatchTool(Tool):
         self.js_tool = BuildJsTool(*args, **kwargs)
         self.sass_tool = BuildSassTool(*args, **kwargs)
 
-    def on_sass_file_event(self, event):
-        """
-        Handle a file event on the Sass paths.
-        """
-        self._on_file_event(event, self.sass_tool)
+    def _sass(self, event):
+        self.sass_tool.run()
 
-    def on_js_file_event(self, event):
-        """
-        Handle a file event on the Js paths.
-        """
-        self._on_file_event(event, self.js_tool)
-
-    def _on_file_event(self, event, tool):
-        try:
-            tool.run()
-        except ToolFailureError as e:
-            self.write(e.output)
+    def _js(self, event):
+        self.js_tool.run()
 
     def run(self, *args, **kwargs):
-        from watchdog.observers import Observer
-        from watchdog.events import FileSystemEventHandler as Handler
-
         sass_paths = self.get_sass_include_paths()
         js_paths = [get_setting('foundation_js_path')]
 
-        sass_handler = type('Handler', (Handler,), {'dispatch': self.on_sass_file_event})()
-        js_handler = type('Handler', (Handler,), {'dispatch': self.on_js_file_event})()
+        sass_handler = type('Handler', (Handler,), {'on_modified': self._sass})()
+        js_handler = type('Handler', (Handler,), {'on_modified': self._js})()
         observer = Observer()
 
         for path in sass_paths:

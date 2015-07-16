@@ -293,7 +293,7 @@
   window.Foundation = {
     name : 'Foundation',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     media_queries : {
       'small'       : S('.foundation-mq-small').css('font-family').replace(/^[\/\\'"]+|(;\s?})+|[\/\\'"]+$/g, ''),
@@ -729,17 +729,15 @@
   Foundation.libs.abide = {
     name : 'abide',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     settings : {
-      live_validate : true, // validate the form as you go
-      validate_on_blur : true, // validate whenever you focus/blur on an input field
+      live_validate : true,
+      validate_on_blur : true,
       // validate_on: 'tab', // tab (when user tabs between fields), change (input changes), manual (call custom events) 
-      focus_on_invalid : true, // automatically bring the focus to an invalid input field
+      focus_on_invalid : true,
       error_labels : true, // labels with a for="inputId" will recieve an `error` class
-      error_class : 'error', // labels with a for="inputId" will recieve an `error` class
-      // the amount of time Abide will take before it validates the form (in ms). 
-      // smaller time will result in faster validation
+      error_class : 'error',
       timeout : 1000,
       patterns : {
         alpha : /^[a-zA-Z]+$/,
@@ -1026,7 +1024,6 @@
         }
         validations = validations.concat(el_validations);
       }
-
       return validations;
     },
 
@@ -1140,7 +1137,7 @@
   Foundation.libs.accordion = {
     name : 'accordion',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     settings : {
       content_class : 'content',
@@ -1210,7 +1207,7 @@
           settings = accordion.data(self.attr_name(true) + '-init') || self.settings;
 
       aunts.children('a').attr('aria-expanded','false');
-      aunts.has('.' + settings.content_class + '.' + settings.active_class).addClass(settings.active_class).children('a').attr('aria-expanded','true');
+      aunts.has('.' + settings.content_class + '.' + settings.active_class).children('a').attr('aria-expanded','true');
 
       if (settings.multi_expand) {
         $instance.attr('aria-multiselectable','true');
@@ -1228,7 +1225,7 @@
   Foundation.libs.alert = {
     name : 'alert',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     settings : {
       callback : function () {}
@@ -1271,7 +1268,7 @@
   Foundation.libs.clearing = {
     name : 'clearing',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     settings : {
       templates : {
@@ -1720,9 +1717,9 @@
       var caption = $image.attr('data-caption');
 
       if (caption) {
-      	var containerPlain = container.get(0);
-      	containerPlain.innerHTML = caption;
-        container.show();
+        container
+          .html(caption)
+          .show();
       } else {
         container
           .text('')
@@ -1857,7 +1854,7 @@
   Foundation.libs.dropdown = {
     name : 'dropdown',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     settings : {
       active_class : 'open',
@@ -2111,7 +2108,7 @@
     // `this` is the dropdown
     dirs : {
       // Calculate target offset
-      _base : function (t, s) {
+      _base : function (t) {
         var o_p = this.offsetParent(),
             o = o_p.offset(),
             p = t.offset();
@@ -2137,7 +2134,7 @@
         var actualMarginWidth = (window.innerWidth - actualBodyWidth) / 2;
         var actualBoundary = actualBodyWidth;
 
-        if (!this.hasClass('mega') && !s.ignore_repositioning) {
+        if (!this.hasClass('mega')) {
           //miss top
           if (t.offset().top <= this.outerHeight()) {
             p.missTop = true;
@@ -2163,7 +2160,7 @@
 
       top : function (t, s) {
         var self = Foundation.libs.dropdown,
-            p = self.dirs._base.call(this, t, s);
+            p = self.dirs._base.call(this, t);
 
         this.addClass('drop-top');
 
@@ -2190,7 +2187,7 @@
 
       bottom : function (t, s) {
         var self = Foundation.libs.dropdown,
-            p = self.dirs._base.call(this, t, s);
+            p = self.dirs._base.call(this, t);
 
         if (p.missRight == true) {
           p.left = p.left - this.outerWidth() + t.outerWidth();
@@ -2208,7 +2205,7 @@
       },
 
       left : function (t, s) {
-        var p = Foundation.libs.dropdown.dirs._base.call(this, t, s);
+        var p = Foundation.libs.dropdown.dirs._base.call(this, t);
 
         this.addClass('drop-left');
 
@@ -2222,7 +2219,7 @@
       },
 
       right : function (t, s) {
-        var p = Foundation.libs.dropdown.dirs._base.call(this, t, s);
+        var p = Foundation.libs.dropdown.dirs._base.call(this, t);
 
         this.addClass('drop-right');
 
@@ -2320,7 +2317,7 @@
   Foundation.libs.equalizer = {
     name : 'equalizer',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     settings : {
       use_tallest : true,
@@ -2424,7 +2421,7 @@
   Foundation.libs.interchange = {
     name : 'interchange',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     cache : {},
 
@@ -2469,8 +2466,7 @@
           // });
 
           if (el !== null && /IMG/.test(el[0].nodeName)) {
-            var orig_path = $.each(el, function(){this.src = path;});
-            // var orig_path = el[0].src;
+            var orig_path = el[0].src;
 
             if (new RegExp(path, 'i').test(orig_path)) {
               return;
@@ -2786,7 +2782,7 @@
   Foundation.libs.joyride = {
     name : 'joyride',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     defaults : {
       expose                   : false,     // turn on or off the expose feature
@@ -3716,7 +3712,7 @@
   Foundation.libs['magellan-expedition'] = {
     name : 'magellan-expedition',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     settings : {
       active_class : 'active',
@@ -3931,7 +3927,7 @@
   Foundation.libs.offcanvas = {
     name : 'offcanvas',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     settings : {
       open_method : 'move',
@@ -3947,22 +3943,16 @@
           S = self.S,
           move_class = '',
           right_postfix = '',
-          left_postfix = '',
-          top_postfix = '',
-          bottom_postfix = '';
+          left_postfix = '';
 
       if (this.settings.open_method === 'move') {
         move_class = 'move-';
         right_postfix = 'right';
         left_postfix = 'left';
-        top_postfix = 'top';
-        bottom_postfix = 'bottom';
       } else if (this.settings.open_method === 'overlap_single') {
         move_class = 'offcanvas-overlap-';
         right_postfix = 'right';
         left_postfix = 'left';
-        top_postfix = 'top';
-        bottom_postfix = 'bottom';
       } else if (this.settings.open_method === 'overlap') {
         move_class = 'offcanvas-overlap';
       }
@@ -3991,7 +3981,6 @@
           }
           $('.left-off-canvas-toggle').attr('aria-expanded', 'true');
         })
-        //end of left canvas
         .on('click.fndtn.offcanvas', '.right-off-canvas-toggle', function (e) {
           self.click_toggle_class(e, move_class + left_postfix);
           if (self.settings.open_method !== 'overlap') {
@@ -4015,55 +4004,6 @@
           }
           $('.right-off-canvas-toggle').attr('aria-expanded', 'true');
         })
-        //end of right canvas
-        .on('click.fndtn.offcanvas', '.top-off-canvas-toggle', function (e) {
-          self.click_toggle_class(e, move_class + bottom_postfix);
-          if (self.settings.open_method !== 'overlap') {
-            S('.top-submenu').removeClass(move_class + bottom_postfix);
-          }
-          $('.top-off-canvas-toggle').attr('aria-expanded', 'true');
-        })
-        .on('click.fndtn.offcanvas', '.top-off-canvas-menu a', function (e) {
-          var settings = self.get_settings(e);
-          var parent = S(this).parent();
-
-          if (settings.close_on_click && !parent.hasClass('has-submenu') && !parent.hasClass('back')) {
-            self.hide.call(self, move_class + bottom_postfix, self.get_wrapper(e));
-            parent.parent().removeClass(move_class + bottom_postfix);
-          } else if (S(this).parent().hasClass('has-submenu')) {
-            e.preventDefault();
-            S(this).siblings('.top-submenu').toggleClass(move_class + bottom_postfix);
-          } else if (parent.hasClass('back')) {
-            e.preventDefault();
-            parent.parent().removeClass(move_class + bottom_postfix);
-          }
-          $('.top-off-canvas-toggle').attr('aria-expanded', 'true');
-        })
-        //end of top canvas
-        .on('click.fndtn.offcanvas', '.bottom-off-canvas-toggle', function (e) {
-          self.click_toggle_class(e, move_class + top_postfix);
-          if (self.settings.open_method !== 'overlap') {
-            S('.bottom-submenu').removeClass(move_class + top_postfix);
-          }
-          $('.bottom-off-canvas-toggle').attr('aria-expanded', 'true');
-        })
-        .on('click.fndtn.offcanvas', '.bottom-off-canvas-menu a', function (e) {
-          var settings = self.get_settings(e);
-          var parent = S(this).parent();
-
-          if (settings.close_on_click && !parent.hasClass('has-submenu') && !parent.hasClass('back')) {
-            self.hide.call(self, move_class + top_postfix, self.get_wrapper(e));
-            parent.parent().removeClass(move_class + top_postfix);
-          } else if (S(this).parent().hasClass('has-submenu')) {
-            e.preventDefault();
-            S(this).siblings('.bottom-submenu').toggleClass(move_class + top_postfix);
-          } else if (parent.hasClass('back')) {
-            e.preventDefault();
-            parent.parent().removeClass(move_class + top_postfix);
-          }
-          $('.bottom-off-canvas-toggle').attr('aria-expanded', 'true');
-        })
-        //end of bottom
         .on('click.fndtn.offcanvas', '.exit-off-canvas', function (e) {
           self.click_remove_class(e, move_class + left_postfix);
           S('.right-submenu').removeClass(move_class + left_postfix);
@@ -4079,23 +4019,6 @@
           if (right_postfix) {
             self.click_remove_class(e, move_class + right_postfix);
             $('.right-off-canvas-toggle').attr('aria-expanded', 'false');
-          }
-        })
-        .on('click.fndtn.offcanvas', '.exit-off-canvas', function (e) {
-          self.click_remove_class(e, move_class + top_postfix);
-          S('.bottom-submenu').removeClass(move_class + top_postfix);
-          if (bottom_postfix) {
-            self.click_remove_class(e, move_class + bottom_postfix);
-            S('.top-submenu').removeClass(move_class + top_postfix);
-          }
-          $('.bottom-off-canvas-toggle').attr('aria-expanded', 'true');
-        })
-        .on('click.fndtn.offcanvas', '.exit-off-canvas', function (e) {
-          self.click_remove_class(e, move_class + top_postfix);
-          $('.top-off-canvas-toggle').attr('aria-expanded', 'false');
-          if (bottom_postfix) {
-            self.click_remove_class(e, move_class + bottom_postfix);
-            $('.bottom-off-canvas-toggle').attr('aria-expanded', 'false');
           }
         });
     },
@@ -4559,7 +4482,7 @@
   Foundation.libs.orbit = {
     name : 'orbit',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     settings : {
       animation : 'slide',
@@ -4632,7 +4555,7 @@
   Foundation.libs.reveal = {
     name : 'reveal',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     locked : false,
 
@@ -4783,7 +4706,7 @@
       settings = settings || this.settings;
 
 
-      if (modal.hasClass('open') && target !== undefined && target.attr('data-reveal-id') == modal.attr('id')) {
+      if (modal.hasClass('open') && target.attr('data-reveal-id') == modal.attr('id')) {
         return self.close(modal);
       }
 
@@ -5130,7 +5053,7 @@
   Foundation.libs.slider = {
     name : 'slider',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     settings : {
       start : 0,
@@ -5198,9 +5121,10 @@
 
         if (settings.display_selector != '') {
           $(settings.display_selector).each(function(){
-            if ($(this).attr('value')) {
+            if (this.hasOwnProperty('value')) {
               $(this).change(function(){
-                self.set_value($(this).val());
+                // is there a better way to do this?
+                slider.foundation("slider", "set_value", $(this).val());
               });
             }
           });
@@ -5410,7 +5334,7 @@
   Foundation.libs.tab = {
     name : 'tab',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     settings : {
       active_class : 'active',
@@ -5426,12 +5350,16 @@
       var self = this,
           S = this.S;
 
-  	  // Store the default active tabs which will be referenced when the
-  	  // location hash is absent, as in the case of navigating the tabs and
-  	  // returning to the first viewing via the browser Back button.
-  	  S('[' + this.attr_name() + '] > .active > a', this.scope).each(function () {
-  	    self.default_tab_hashes.push(this.hash);
-  	  });
+	  // Store the default active tabs which will be referenced when the
+	  // location hash is absent, as in the case of navigating the tabs and
+	  // returning to the first viewing via the browser Back button.
+	  S('[' + this.attr_name() + '] > .active > a', this.scope).each(function () {
+	    self.default_tab_hashes.push(this.hash);
+	  });
+
+      // store the initial href, which is used to allow correct behaviour of the
+      // browser back button when deep linking is turned on.
+      self.entry_location = window.location.href;
 
       this.bindings(method, options);
       this.handle_location_hash_change();
@@ -5583,9 +5511,10 @@
           go_to_hash = function(hash) {
             // This function allows correct behaviour of the browser's back button when deep linking is enabled. Without it
             // the user would get continually redirected to the default hash.
-            var default_hash = settings.scroll_to_content ? self.default_tab_hashes[0] : 'fndtn-' + self.default_tab_hashes[0].replace('#', '');
+            var is_entry_location = window.location.href === self.entry_location,
+                default_hash = settings.scroll_to_content ? self.default_tab_hashes[0] : is_entry_location ? window.location.hash :'fndtn-' + self.default_tab_hashes[0].replace('#', '')
 
-            if (hash !== default_hash || window.location.hash) {
+            if (!(is_entry_location && hash === default_hash)) {
               window.location.hash = hash;
             }
           };
@@ -5654,7 +5583,7 @@
   Foundation.libs.tooltip = {
     name : 'tooltip',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     settings : {
       additional_inheritable_classes : [],
@@ -5663,8 +5592,6 @@
       touch_close_text : 'Tap To Close',
       disable_for_touch : false,
       hover_delay : 200,
-      fade_in_duration : 150,
-      fade_out_duration : 150,
       show_on : 'all',
       tip_template : function (selector, content) {
         return '<span data-selector="' + selector + '" id="' + selector + '" class="'
@@ -5959,19 +5886,19 @@
 
     show : function ($target) {
       var $tip = this.getTip($target);
+
       if ($target.data('tooltip-open-event-type') == 'touch') {
         this.convert_to_touch($target);
       }
 
       this.reposition($target, $tip, $target.attr('class'));
       $target.addClass('open');
-      $tip.fadeIn(this.settings.fade_in_duration);
+      $tip.fadeIn(150);
     },
 
     hide : function ($target) {
       var $tip = this.getTip($target);
-
-      $tip.fadeOut(this.settings.fade_out_duration, function () {
+      $tip.fadeOut(150, function () {
         $tip.find('.tap-to-close').remove();
         $tip.off('click.fndtn.tooltip.tapclose MSPointerDown.fndtn.tapclose');
         $target.removeClass('open');
@@ -5995,7 +5922,7 @@
   Foundation.libs.topbar = {
     name : 'topbar',
 
-    version : '{{VERSION}}',
+    version : '5.5.2',
 
     settings : {
       index : 0,

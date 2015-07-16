@@ -30,8 +30,4 @@ class Command(BaseCommand):
         Run the command.
         """
         tool = self.tools[options['command']](stdout=self.stdout)
-        try:
-            tool.run()
-        except tools.ToolFailureError as e:
-            self.stdout.write('Failed on command: ' + e.command)
-            sys.exit(1)
+        tool.run()
