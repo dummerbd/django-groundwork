@@ -61,7 +61,10 @@ COMPONENTS = {
         BaseComponent(js=['jquery.cookie/jquery.cookie'], default=False),
 
     'modernizr':
-        BaseComponent(js=['modernizr/modernizr']),
+        BaseComponent(js=['modernizr/modernizr'], default=False),
+
+    'modernizr-slim':
+        BaseComponent(js=['modernizr-slim/modernizr.custom']),
 
     'accordion':
         Component(js=['accordion'], sass=['accordion']),
