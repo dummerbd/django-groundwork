@@ -10,6 +10,12 @@ from django.conf import settings
 BASE_DIR = path.abspath(path.join(path.dirname(path.abspath(__file__)), '..'))
 
 
+if settings.GROUNDWORK_DISTRIBUTION_OUTPUT:
+    output_root = path.join(BASE_DIR, 'groundwork/static/groundwork')
+else:
+    output_root = settings.STATIC_ROOT
+
+
 DEFAULTS = {
     'GROUNDWORK_COMPONENTS':
         'all',
@@ -30,16 +36,16 @@ DEFAULTS = {
         [path.join(BASE_DIR, 'scss')],
 
     'GROUNDWORK_SASS_OUTPUT':
-        path.join(settings.STATIC_ROOT, 'css/foundation.css'),
+        path.join(output_root, 'css/foundation.css'),
 
     'GROUNDWORK_SASS_MIN_OUTPUT':
-        path.join(settings.STATIC_ROOT, 'css/foundation.min.css'),
+        path.join(output_root, 'css/foundation.min.css'),
 
     'GROUNDWORK_JS_OUTPUT':
-        path.join(settings.STATIC_ROOT, 'js/foundation.js'),
+        path.join(output_root, 'js/foundation.js'),
 
     'GROUNDWORK_JS_MIN_OUTPUT':
-        path.join(settings.STATIC_ROOT, 'js/foundation.min.js')
+        path.join(output_root, 'js/foundation.min.js'),
 }
 
 
