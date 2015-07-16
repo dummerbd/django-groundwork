@@ -3,7 +3,6 @@ tools.py - common tasks for installing, configuring, and using external tools.
 """
 import sys
 import os
-import re
 import time
 from os import path
 
@@ -62,7 +61,7 @@ class Tool:
         return [main_js_file] + list(components.get_js_files())
 
     def makedirs(self, *paths):
-        for p in paths: 
+        for p in paths:
             os.makedirs(path.dirname(p), exist_ok=True)
 
 
@@ -102,7 +101,8 @@ class BuildSassTool(Tool):
         self.info('App', self.app)
         self.info('Settings', self.settings)
         self.info('Paths')
-        for path in self.paths: self.info(msg=path)
+        for p in self.paths:
+            self.info(msg=p)
         self.makedirs(self.output, self.min_output)
 
         if not self.sass():
@@ -128,8 +128,8 @@ class BuildJsTool(Tool):
 
         self.info('Output', output)
         source = ''
-        for path in self.get_js_files():
-            with open(path, 'r') as src_file:
+        for p in self.get_js_files():
+            with open(p, 'r') as src_file:
                 source += src_file.read()
 
         with open(output, 'w+') as output_file:
@@ -182,15 +182,16 @@ class WatchTool(Tool):
         js_handler = type('Handler', (Handler,), {'on_modified': self._js})()
         observer = Observer()
 
-        for path in sass_paths:
-            observer.schedule(sass_handler, path, recursive=True)
-        for path in js_paths:
-            observer.schedule(js_handler, path, recursive=True)
+        for p in sass_paths:
+            observer.schedule(sass_handler, p, recursive=True)
+        for p in js_paths:
+            observer.schedule(js_handler, p, recursive=True)
 
         self.write('Watching...')
         observer.start()
         try:
-            while True: time.sleep(1)
+            while True:
+                time.sleep(1)
         except:
             observer.stop()
         observer.join()

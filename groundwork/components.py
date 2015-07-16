@@ -29,7 +29,6 @@ class Component:
     @property
     def sass_imports(self):
         return['foundation/components/%s' % name for name in self.sass]
-    
 
 
 COMPONENTS = {
@@ -145,7 +144,7 @@ def flatten(lst):
 
 
 def get_sass_imports():
-    """ 
+    """
     Get a list of all the required SASS components.
     """
     components = get_setting('components')

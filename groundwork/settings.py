@@ -1,7 +1,6 @@
 """
 settings.py - configuration options for groundwork.
 """
-import os
 from os import path
 
 from django.conf import settings
