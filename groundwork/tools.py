@@ -6,7 +6,7 @@ import os
 import time
 from os import path
 
-from groundwork.settings import get_setting
+from groundwork.settings import get_setting, DEFAULT_SETTINGS
 from groundwork import components
 
 try:
@@ -195,3 +195,35 @@ class WatchTool(Tool):
         except:
             observer.stop()
         observer.join()
+
+
+class InfoTool(Tool):
+    """
+    Lists information about the groundwork installation.
+    """
+    def run(self):
+        self.write('Available Tools:')
+        self.info(
+            'sass',
+            'compile and compress the Foundation Sass project into Css (requires libsass)')
+        self.info(
+            'js',
+            'compile and compress the Foundation Js project (requires jsmin)')
+        self.info(
+            'build',
+            'runs both the sass and js tools')
+        self.info(
+            'watch',
+            'runs a filesystem watcher that automatically runs the Js or Sass tool when a file changes')
+
+        self.write('Current Groundwork Configration:')
+        for k, v in DEFAULT_SETTINGS.items():
+            self.write('  %s\n    - %s' % (k, v))
+
+        self.write('Available Components:')
+        for n, c in components.COMPONENTS.items():
+            self.write('  %s' % n)
+            if c.sass:
+                self.write('    - sass: %s' % ', '.join(c.sass))
+            if c.js:
+                self.write('    - js  : %s' % ', '.join(c.js))

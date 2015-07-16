@@ -15,7 +15,7 @@ else:
     output_root = settings.STATIC_ROOT
 
 
-DEFAULTS = {
+DEFAULT_SETTINGS = {
     'GROUNDWORK_COMPONENTS':
         'all',
 
@@ -55,4 +55,4 @@ def get_setting(name):
     name = 'GROUNDWORK_' + name.upper()
     if hasattr(settings, name):
         return getattr(settings, name)
-    return DEFAULTS[name]
+    return DEFAULT_SETTINGS[name]

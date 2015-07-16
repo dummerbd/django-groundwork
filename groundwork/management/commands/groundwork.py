@@ -14,7 +14,8 @@ class Command(BaseCommand):
         'sass': tools.BuildSassTool,
         'js': tools.BuildJsTool,
         'build': tools.BuildTool,
-        'watch': tools.WatchTool
+        'watch': tools.WatchTool,
+        'info': tools.InfoTool,
     }
 
     def add_arguments(self, parser):
