@@ -4,6 +4,7 @@ from django.contrib.messages import constants
 
 register = template.Library()
 
+
 @register.simple_tag
 def groundwork_js(js_name=None):
     '''
@@ -87,13 +88,4 @@ def groundwork_paginator(context):
     Use this tag to insert a paginator control that works with the generic
     ListView and Paginator classes.
     '''
-    if not context['is_paginated']:
-        return {
-            'is_paginated': False,
-        }
-
-    return {
-        'is_paginated': True,
-        'page_obj': context['page_obj'],
-        'paginator': context['paginator'],
-    }
+    return context

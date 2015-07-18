@@ -6,7 +6,7 @@ import os
 import time
 from os import path
 
-from groundwork.settings import get_setting, DEFAULT_SETTINGS
+from groundwork.settings import get_setting, get_output_path, DEFAULT_SETTINGS
 from groundwork import components
 
 try:
@@ -74,8 +74,8 @@ class BuildSassTool(Tool):
         super().__init__(*args, **kwargs)
         self.app = get_setting('sass_app')
         self.settings = get_setting('sass_settings')
-        self.output = get_setting('sass_output')
-        self.min_output = get_setting('sass_min_output')
+        self.output = get_output_path('sass')
+        self.min_output = get_output_path('sass_min')
         self.paths = self.get_sass_include_paths()
         self.imports = [self.settings] + components.get_sass_imports() + [self.app]
 
@@ -123,7 +123,8 @@ class BuildJsTool(Tool):
     def run(self, *args, **kwargs):
         self.info('Js', 'building...')
 
-        output, min_output = get_setting('js_output'), get_setting('js_min_output')
+        output = get_output_path('js')
+        min_output = get_output_path('js_min')
         self.makedirs(output, min_output)
 
         self.info('Output', output)

@@ -9,12 +9,6 @@ from django.conf import settings
 BASE_DIR = path.abspath(path.join(path.dirname(path.abspath(__file__)), '..'))
 
 
-if getattr(settings, 'GROUNDWORK_DISTRIBUTION_OUTPUT', False):
-    output_root = path.join(BASE_DIR, 'groundwork/static/groundwork')
-else:
-    output_root = settings.STATIC_ROOT
-
-
 DEFAULT_SETTINGS = {
     'GROUNDWORK_COMPONENTS':
         'all',
@@ -34,17 +28,20 @@ DEFAULT_SETTINGS = {
     'GROUNDWORK_SASS_INCLUDE_PATHS':
         [path.join(BASE_DIR, 'scss')],
 
-    'GROUNDWORK_SASS_OUTPUT':
-        path.join(output_root, 'css/foundation.css'),
+    'GROUNDWORK_SASS_STATIC_PATH':
+        'css/foundation.css',
 
-    'GROUNDWORK_SASS_MIN_OUTPUT':
-        path.join(output_root, 'css/foundation.min.css'),
+    'GROUNDWORK_SASS_MIN_STATIC_PATH':
+        'css/foundation.min.css',
 
-    'GROUNDWORK_JS_OUTPUT':
-        path.join(output_root, 'js/foundation.js'),
+    'GROUNDWORK_JS_STATIC_PATH':
+        'js/foundation.js',
 
-    'GROUNDWORK_JS_MIN_OUTPUT':
-        path.join(output_root, 'js/foundation.min.js'),
+    'GROUNDWORK_JS_MIN_STATIC_PATH':
+        'js/foundation.min.js',
+
+    'GROUNDWORK_OUTPUT_ROOT_PATH':
+        settings.STATIC_ROOT
 }
 
 
@@ -56,3 +53,17 @@ def get_setting(name):
     if hasattr(settings, name):
         return getattr(settings, name)
     return DEFAULT_SETTINGS[name]
+
+
+if getattr(settings, 'GROUNDWORK_DISTRIBUTION_OUTPUT', False):
+    output_root = path.join(BASE_DIR, 'groundwork/static/groundwork')
+else:
+    output_root = get_setting('output_root_path')
+
+
+def get_output_path(name):
+    """
+    For a path setting name, get the full path.
+    """
+    name += '_static_path'
+    return path.join(output_root, get_setting(name))
