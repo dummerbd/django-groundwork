@@ -29,16 +29,16 @@ DEFAULT_SETTINGS = {
         [path.join(BASE_DIR, 'scss')],
 
     'GROUNDWORK_SASS_STATIC_PATH':
-        'css/foundation.css',
+        'groundwork/css/foundation.css',
 
     'GROUNDWORK_SASS_MIN_STATIC_PATH':
-        'css/foundation.min.css',
+        'groundwork/css/foundation.min.css',
 
     'GROUNDWORK_JS_STATIC_PATH':
-        'js/foundation.js',
+        'groundwork/js/foundation.js',
 
     'GROUNDWORK_JS_MIN_STATIC_PATH':
-        'js/foundation.min.js',
+        'groundwork/js/foundation.min.js',
 
     'GROUNDWORK_OUTPUT_ROOT_PATH':
         settings.STATIC_ROOT
@@ -56,7 +56,7 @@ def get_setting(name):
 
 
 if getattr(settings, 'GROUNDWORK_DISTRIBUTION_OUTPUT', False):
-    output_root = path.join(BASE_DIR, 'groundwork/static/groundwork')
+    output_root = path.join(BASE_DIR, 'groundwork/static')
 else:
     output_root = get_setting('output_root_path')
 

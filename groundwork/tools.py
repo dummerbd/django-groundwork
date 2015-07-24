@@ -57,8 +57,7 @@ class Tool:
         """
         Get a list of the Js files to be built.
         """
-        main_js_file = os.path.join(get_setting('foundation_js_path'), 'foundation.js')
-        return [main_js_file] + list(components.get_js_files())
+        return components.get_js_files()
 
     def makedirs(self, *paths):
         for p in paths:

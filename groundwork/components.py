@@ -3,6 +3,7 @@ components.py - contains definitions for Foundation components.
 """
 from os import path
 from functools import reduce
+from collections import OrderedDict
 
 from groundwork.settings import get_setting
 
@@ -14,163 +15,165 @@ class BaseComponent:
     """
     Base component.
     """
+    js_path = path.join(BASE_DIR, 'libs')
+    sass_prefix = ''
+
     def __init__(self, js=[], sass=[], default=True):
         """
         `js` and `sass` should be a list of names such as `accordion`, or `tab`
         that can be formed with the path settings.
         """
-        self.root = path.join(BASE_DIR, 'libs')
         self.js = js
         self.sass = sass
         self.default = default
 
     @property
     def js_files(self):
-        return [path.join(self.root, '%s.js' % name) for name in self.js]
+        return [path.join(self.js_path, '%s.js' % name) for name in self.js]
 
     @property
     def sass_imports(self):
-        return self.sass
+        return ['%s%s' % (self.sass_prefix, name) for name in self.sass]
 
 
 class Component(BaseComponent):
     """
-    Foundation component, really just a pairing of JS and SASS files.
+    Foundation component.
     """
-    @property
-    def js_files(self):
-        root = get_setting('foundation_js_path')
-        return [path.join(root, 'foundation.%s.js' % name) for name in self.js]
-
-    @property
-    def sass_imports(self):
-        return['foundation/components/%s' % name for name in self.sass]
+    js_path = get_setting('foundation_js_path')
+    sass_prefix = 'foundation/components/'
 
 
-COMPONENTS = {
-    'fastclick':
-        BaseComponent(js=['fastclick/lib/fastclick'], default=False),
+# The ordering of these components matters since this will be the same ordering
+# in the built JS and CSS files.
+COMPONENTS = OrderedDict()
 
-    'jquery':
-        BaseComponent(js=['jquery/dist/jquery']),
-
-    'jquery-placeholder':
-        BaseComponent(js=['jquery-placeholder/jquery.placeholder'], default=False),
-
-    'jquery-cookie':
-        BaseComponent(js=['jquery.cookie/jquery.cookie'], default=False),
-
-    'modernizr':
-        BaseComponent(js=['modernizr/modernizr'], default=False),
-
-    'modernizr-slim':
-        BaseComponent(js=['modernizr-slim/modernizr.custom']),
-
-    'accordion':
-        Component(js=['accordion'], sass=['accordion']),
-
-    'alert':
-        Component(js=['alert'], sass=['alert-boxes']),
-
-    'abide':
-        Component(js=['abide']),
-
-    'block-grid':
-        Component(sass=['block-grid']),
-
-    'breadcrumbs':
-        Component(sass=['breadcrumbs']),
-
-    'buttons':
-        Component(sass=['buttons', 'button-groups', 'split-buttons']),
-
-    'clearing':
-        Component(js=['clearing'], sass=['clearing']),
-
-    'dropdown':
-        Component(js=['dropdown'], sass=['dropdown', 'dropdown-buttons']),
-
-    'equalizer':
-        Component(js=['equalizer']),
-
-    'flex-video':
-        Component(sass=['flex-video']),
-
-    'forms':
-        Component(sass=['forms']),
-
-    'grid':
-        Component(sass=['grid']),
-
-    'inline-lists':
-        Component(sass=['inline-lists']),
-
-    'interchange':
-        Component(js=['interchange']),
-
-    'joyride':
-        Component(js=['joyride'], sass=['joyride']),
-
-    'keystrokes':
-        Component(sass=['keystrokes']),
-
-    'labels':
-        Component(sass=['labels']),
-
-    'magellan':
-        Component(js=['magellan'], sass=['magellan']),
-
-    'offcanvas':
-        Component(js=['offcanvas'], sass=['offcanvas']),
-
-    'orbit':
-        Component(js=['orbit'], sass=['orbit']),
-
-    'pagination':
-        Component(sass=['pagination']),
-
-    'panels':
-        Component(sass=['panels']),
-
-    'pricing-tables':
-        Component(sass=['pricing-tables']),
-
-    'progress-bars':
-        Component(sass=['progress-bars']),
-
-    'nav':
-        Component(sass=['side-nav', 'sub-nav']),
-
-    'reveal':
-        Component(js=['reveal'], sass=['reveal']),
-
-    'slider':
-        Component(js=['slider']),
-
-    'switches':
-        Component(sass=['switches']),
-
-    'tables':
-        Component(sass=['tables']),
-
-    'tabs':
-        Component(js=['tab'], sass=['tabs']),
-
-    'thumbs':
-        Component(sass=['thumbs']),
-
-    'tooltips':
-        Component(js=['tooltip'], sass=['tooltips']),
-
-    'topbar':
-        Component(js=['topbar'], sass=['top-bar']),
-
-    'type':
-        Component(sass=['type']),
-
-    'visibility':
-        Component(sass=['visibility'])
-}
+COMPONENTS['modernizr'] = BaseComponent(
+    js=['modernizr/modernizr'], default=False
+)
+COMPONENTS['modernizr-slim'] = BaseComponent(
+    js=['modernizr-slim/modernizr.custom']
+)
+COMPONENTS['jquery'] = BaseComponent(
+    js=['jquery/dist/jquery']
+)
+COMPONENTS['jquery-placeholder'] = BaseComponent(
+    js=['jquery-placeholder/jquery.placeholder'], default=False
+)
+COMPONENTS['jquery-cookie'] = BaseComponent(
+    js=['jquery.cookie/jquery.cookie'], default=False
+)
+COMPONENTS['fastclick'] = BaseComponent(
+    js=['fastclick/lib/fastclick'], default=False
+)
+COMPONENTS['foundation'] = Component(
+    js=['foundation']
+)
+COMPONENTS['accordion'] = Component(
+    js=['foundation.accordion'], sass=['accordion']
+)
+COMPONENTS['alert'] = Component(
+    js=['foundation.alert'], sass=['alert-boxes']
+)
+COMPONENTS['abide'] = Component(
+    js=['foundation.abide']
+)
+COMPONENTS['block-grid'] = Component(
+    sass=['block-grid']
+)
+COMPONENTS['breadcrumbs'] = Component(
+    sass=['breadcrumbs']
+)
+COMPONENTS['buttons'] = Component(
+    sass=['buttons', 'button-groups', 'split-buttons']
+)
+COMPONENTS['clearing'] = Component(
+    js=['foundation.clearing'], sass=['clearing']
+)
+COMPONENTS['dropdown'] = Component(
+    js=['foundation.dropdown'], sass=['dropdown', 'dropdown-buttons']
+)
+COMPONENTS['equalizer'] = Component(
+    js=['foundation.equalizer']
+)
+COMPONENTS['flex-video'] = Component(
+    sass=['flex-video']
+)
+COMPONENTS['forms'] = Component(
+    sass=['forms']
+)
+COMPONENTS['grid'] = Component(
+    sass=['grid']
+)
+COMPONENTS['inline-lists'] = Component(
+    sass=['inline-lists']
+)
+COMPONENTS['interchange'] = Component(
+    js=['foundation.interchange']
+)
+COMPONENTS['joyride'] = Component(
+    js=['foundation.joyride'], sass=['joyride']
+)
+COMPONENTS['keystrokes'] = Component(
+    sass=['keystrokes']
+)
+COMPONENTS['labels'] = Component(
+    sass=['labels']
+)
+COMPONENTS['magellan'] = Component(
+    js=['foundation.magellan'], sass=['magellan']
+)
+COMPONENTS['offcanvas'] = Component(
+    js=['foundation.offcanvas'], sass=['offcanvas']
+)
+COMPONENTS['orbit'] = Component(
+    js=['foundation.orbit'], sass=['orbit']
+)
+COMPONENTS['pagination'] = Component(
+    sass=['pagination']
+)
+COMPONENTS['panels'] = Component(
+    sass=['panels']
+)
+COMPONENTS['pricing-tables'] = Component(
+    sass=['pricing-tables']
+)
+COMPONENTS['progress-bars'] = Component(
+    sass=['progress-bars']
+)
+COMPONENTS['nav'] = Component(
+    sass=['side-nav', 'sub-nav']
+)
+COMPONENTS['reveal'] = Component(
+    js=['foundation.reveal'], sass=['reveal']
+)
+COMPONENTS['slider'] = Component(
+    js=['foundation.slider']
+)
+COMPONENTS['switches'] = Component(
+    sass=['switches']
+)
+COMPONENTS['tables'] = Component(
+    sass=['tables']
+)
+COMPONENTS['tabs'] = Component(
+    js=['foundation.tab'], sass=['tabs']
+)
+COMPONENTS['thumbs'] = Component(
+    sass=['thumbs']
+)
+COMPONENTS['tooltips'] = Component(
+    js=['foundation.tooltip'], sass=['tooltips']
+)
+COMPONENTS['topbar'] = Component(
+    js=['foundation.topbar'], sass=['top-bar']
+)
+COMPONENTS['type'] = Component(
+    sass=['type']
+)
+COMPONENTS['visibility'] = Component(
+    sass=['visibility']
+)
 
 
 def flatten(lst):
@@ -188,19 +191,15 @@ def get_sass_imports():
     """
     Get a list of all the required SASS components.
     """
-    imports = flatten(
-        (c.sass_imports for n, c in COMPONENTS.items()
-            if n in _get_components()))
-    imports.sort()
-    return imports
+    return flatten(
+        (c.sass_imports for n, c in COMPONENTS.items() if n in _get_components())
+    )
 
 
 def get_js_files():
     """
     Get a list of all the required JS components.
     """
-    files = flatten(
-        (c.js_files for n, c in
-            COMPONENTS.items() if n in _get_components()))
-    files.sort()
-    return files
+    return flatten(
+        (c.js_files for n, c in COMPONENTS.items() if n in _get_components())
+    )
