@@ -5,5 +5,5 @@ __pycache__/
 # Sphinx documentation
 docs/_build/
 
-# ignore test db
-tests/db.sqlite3
+# ignore demo db
+demo/db.sqlite3

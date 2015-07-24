@@ -1,7 +1,7 @@
 """
 urls.py - routes for test project.
 """
-from django.conf.urls import include, url
+from django.conf.urls import url
 from django.views.generic import TemplateView
 
 
