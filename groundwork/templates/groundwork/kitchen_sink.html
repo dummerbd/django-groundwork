@@ -1,42 +1,42 @@
 {% extends 'groundwork/base.html' %}
 
+{% load static %}
+
+{% block body_js %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#start_joyride').on('click', function() {
+      $(document).foundation('joyride', 'start');
+    });
+  });
+</script>
+{% endblock body_js %}
+
 {% block base_body %}
 <div class="row">
   <div class="small-12 columns">
-    <h1 id="kitchen-sink">Kitchen sink</h1>
+    <h1>Kitchen sink</h1>
     <h3 class="subheader">This page includes every single Foundation element so that we can make sure things work together smoothly.</h3>
 
     <h4 id="joyride">Joyride</h4>
-    <div>
-    <a class="secondary button" id="start-jr" name="start-jr">Start Joyride</a>
-
-    <h5 class="so-awesome" id="numero1">Build Joyride with HTML</h5>
-
-    <p class="so-awesome" id="numero2">Stop Number 2 for You!</p><!--stops-->
-
-    <ol class="joyride-list" data-joyride="">
-      <li data-class="custom so-awesome" data-id="numero1" data-text="Next">
+    <button class="secondary" id="start_joyride">Start Joyride</button>
+    <h5 id="numero1">Build Joyride with HTML</h5>
+    <p id="numero2">Stop Number 2 for You!</p>
+    <ol class="joyride-list" data-joyride>
+      <li data-id="numero1" data-text="Next">
         <h4>Stop #1</h4>
-
         <p>You can control all the details for your tour stop. Any valid HTML will
         work inside of Joyride.</p>
       </li>
-
       <li data-button="Next" data-id="numero2">
         <h4>Stop #2</h4>
-
         <p>Get the details right by styling Joyride with a custom stylesheet!</p>
       </li>
-
       <li data-button="Next">
         <h4>Stop #3</h4>
-
         <p>It works as a modal too!</p>
       </li>
     </ol>
-    </div>
-
-
 
     <hr>
     <h4 id="alert-boxes">Alert Boxes</h4>
@@ -60,14 +60,13 @@
       <a href="" class="close">&times;</a>
     </div>
 
-
     <hr>
     <h4 id="block-grid">Block Grid</h4>
     <ul class="small-block-grid-2 large-block-grid-4">
-      <li><img class="th" src="../assets/img/examples/comet-th.jpg"></li>
-      <li><img class="th" src="../assets/img/examples/launch-th.jpg"></li>
-      <li><img class="th" src="../assets/img/examples/space-th.jpg"></li>
-      <li><img class="th" src="../assets/img/examples/spacewalk-th.jpg"></li>
+      <li><img class="th" src="{% static 'groundwork/img/comet-th.jpg' %}"></li>
+      <li><img class="th" src="{% static 'groundwork/img/launch-th.jpg' %}"></li>
+      <li><img class="th" src="{% static 'groundwork/img/space-th.jpg' %}"></li>
+      <li><img class="th" src="{% static 'groundwork/img/spacewalk-th.jpg' %}"></li>
     </ul>
 
     <hr>
@@ -186,15 +185,15 @@
     <h4 id="clearing">Clearing</h4>
     <div>
       <ul class="clearing-thumbs" data-clearing>
-        <li><a class="th" href="../assets/img/examples/comet.jpg"><img data-caption="Nulla vitae elit libero, a pharetra augue. Cras mattis consectetur purus sit amet fermentum." src="../assets/img/examples/comet-th-sm.jpg"></a></li>
+        <li><a class="th" href="{% static 'groundwork/img/comet.jpg' %}"><img data-caption="Nulla vitae elit libero, a pharetra augue. Cras mattis consectetur purus sit amet fermentum." src="{% static 'groundwork/img/comet-th-sm.jpg' %}"></a></li>
 
-        <li><a class="th" href="../assets/img/examples/earth.jpg"><img src="../assets/img/examples/earth-th-sm.jpg"></a></li>
+        <li><a class="th" href="{% static 'groundwork/img/earth.jpg' %}"><img src="{% static 'groundwork/img/earth-th-sm.jpg' %}"></a></li>
 
-        <li><a class="th" href="../assets/img/examples/launch.jpg"><img data-caption="Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus." src="../assets/img/examples/launch-th-sm.jpg"></a></li>
+        <li><a class="th" href="{% static 'groundwork/img/launch.jpg' %}"><img data-caption="Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus." src="{% static 'groundwork/img/launch-th-sm.jpg' %}"></a></li>
 
-        <li><a class="th" href="../assets/img/examples/satelite.jpg"><img src="../assets/img/examples/satelite-th-sm.jpg"></a></li>
+        <li><a class="th" href="{% static 'groundwork/img/satelite.jpg' %}"><img src="{% static 'groundwork/img/satelite-th-sm.jpg' %}"></a></li>
 
-        <li><a class="th" href="../assets/img/examples/space.jpg"><img data-caption="Integer posuere erat a ante venenatis dapibus posuere velit aliquet." src="../assets/img/examples/space-th-sm.jpg"></a></li>
+        <li><a class="th" href="{% static 'groundwork/img/space.jpg' %}"><img data-caption="Integer posuere erat a ante venenatis dapibus posuere velit aliquet." src="{% static 'groundwork/img/space-th-sm.jpg' %}"></a></li>
       </ul>
     </div>
 
@@ -262,8 +261,7 @@
         <h4>Title</h4>
 
         <p>Some text that people will think is awesome! Some text that people will
-        think is awesome! Some text that people will think is awesome!</p><img src=
-        "../assets/img/examples/launch.jpg">
+        think is awesome! Some text that people will think is awesome!</p><img src="{% static 'groundwork/img/launch.jpg' %}">
 
         <p>Launching a Discovery Mission</p><a class="button" href="#">Button</a>
       </div>
@@ -320,19 +318,19 @@
       <div class="large-12 columns">
         <ul id="featured1" data-orbit data-options="timer_speed:5000;">
           <li>
-            <img src="http://foundation.zurb.com/docs/assets/img/examples/satelite-orbit.jpg" />
+            <img src="{% static 'groundwork/img/satelite-orbit.jpg' %}" />
             <div class="orbit-caption">
               Caption One. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
             </div>
           </li>
           <li>
-            <img src="http://foundation.zurb.com/docs/assets/img/examples/andromeda-orbit.jpg" />
+            <img src="{% static 'groundwork/img/andromeda-orbit.jpg' %}" />
             <div class="orbit-caption">
               Caption Two. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
             </div>
           </li>
           <li>
-            <img src="http://foundation.zurb.com/docs/assets/img/examples/launch-orbit.jpg" />
+            <img src="{% static 'groundwork/img/launch-orbit.jpg' %}" />
             <div class="orbit-caption">
               Caption Three. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
             </div>
@@ -416,7 +414,7 @@
     <div id="videoModal" class="reveal-modal large" data-reveal>
       <h2>This modal has video</h2>
       <div class="flex-video">
-              <iframe width="420" height="315" src="//www.youtube.com/embed/aiBt44rrslw" frameborder="0" allowfullscreen></iframe>
+        <iframe width="420" height="315" src="//www.youtube.com/embed/aiBt44rrslw" frameborder="0" allowfullscreen></iframe>
       </div>
 
       <a class="close-reveal-modal">&#215;</a>
@@ -426,24 +424,24 @@
     <hr>
     <h4 id="sliders">Sliders</h4>
     <div class="range-slider" data-slider>
-        <span class="range-slider-handle"></span>
-        <span class="range-slider-active-segment"></span>
-        <input type="hidden">
+      <span class="range-slider-handle"></span>
+      <span class="range-slider-active-segment"></span>
+      <input type="hidden">
     </div>
     <div class="range-slider radius" data-slider>
-        <span class="range-slider-handle"></span>
-        <span class="range-slider-active-segment"></span>
-        <input type="hidden">
+      <span class="range-slider-handle"></span>
+      <span class="range-slider-active-segment"></span>
+      <input type="hidden">
     </div>
     <div class="range-slider round" data-slider>
-        <span class="range-slider-handle"></span>
-        <span class="range-slider-active-segment"></span>
-        <input type="hidden">
+      <span class="range-slider-handle"></span>
+      <span class="range-slider-active-segment"></span>
+      <input type="hidden">
     </div>
     <div class="range-slider" data-slider data-options="step: 20;">
-        <span class="range-slider-handle"></span>
-        <span class="range-slider-active-segment"></span>
-        <input type="hidden">
+      <span class="range-slider-handle"></span>
+      <span class="range-slider-active-segment"></span>
+      <input type="hidden">
     </div>
 
 
@@ -592,7 +590,7 @@
 
     <hr>
     <h4 id="thumbnails">Thumbnails</h4>
-    <p><img class="th" src="http://foundation.zurb.com/docs/assets/img/examples/earth-th-sm.jpg"><img class="th" src="http://foundation.zurb.com/docs/assets/img/examples/space-th-sm.jpg"></p>
+    <p><img class="th" src="{% static 'groundwork/img/earth-th-sm.jpg' %}"><img class="th" src="{% static 'groundwork/img/space-th-sm.jpg' %}"></p>
     <hr>
     <h4 id="tooltips">Tooltips</h4>
     <p>The tooltips can be positioned on the <span data-tooltip class="has-tip" data-width="210" title="I'm on bottom and the default position.">&quot;tip-bottom&quot;</span>, which is the default position, <span data-tooltip class="has-tip tip-top noradius" data-width="210" title="I'm on the top and I'm not rounded!">&quot;tip-top&quot; (hehe)</span>, <span data-tooltip="left" class="has-tip tip-left" data-width="90" title="I'm on the left!">&quot;tip-left&quot;</span>, or <span data-tooltip="right" class="has-tip tip-right" data-width="120" title="I'm on the right!">&quot;tip-right&quot;</span> of the target element by adding the appropriate class to them. You can even add your own custom class to style each tip differently. On a small device, the tooltips are full width and bottom aligned.</p>
@@ -729,123 +727,8 @@
       <li class="street-address">123 Colonial Ave.</li>
       <li class="locality">Caprica City</li>
       <li><span class="state">Caprica</span>, <span class="zip">12345</span></li>
-      <li class="email"><a href="#"><span class="__cf_email__" data-cfemail="aacd84c8cbc6decbd8eacfd2cbc7dac6cf84c9c5c7">[email&#160;protected]</span><script cf-hash='f9e31' type="text/javascript">
-    /* <![CDATA[ */!function(){try{var t="currentScript"in document?document.currentScript:function(){for(var t=document.getElementsByTagName("script"),e=t.length;e--;)if(t[e].getAttribute("cf-hash"))return t[e]}();if(t&&t.previousSibling){var e,r,n,i,c=t.previousSibling,a=c.getAttribute("data-cfemail");if(a){for(e="",r=parseInt(a.substr(0,2),16),n=2;a.length-n;n+=2)i=parseInt(a.substr(n,2),16)^r,e+=String.fromCharCode(i);e=document.createTextNode(e),c.parentNode.replaceChild(e,c)}}}catch(u){}}();/* ]]> */</script></a></li>
+      <li class="email"><a href="#">really_cool.dude@email.com</a></li>
     </ul>
-
-    </div>
-
-    <hr>
-    <h4 id="visibility-classes">Visibility Classes</h4>
-    <h5 id="screen-size-visibility-control-show-">Screen Size Visibility Control (Show)</h5>
-    <p>The following text should describe the screen size you&#39;re using:</p>
-    <div class="row">
-      <div class="large-6 columns">
-      <h4>HTML</h4>
-      <pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">p</span> <span class="attribute">class</span>=<span class="value">&quot;panel&quot;</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;show-for-small-only&quot;</span>&gt;</span>This text is shown only on a small screen.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;show-for-medium-up&quot;</span>&gt;</span>This text is shown on medium screens and up.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;show-for-medium-only&quot;</span>&gt;</span>This text is shown only on a medium screen.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;show-for-large-up&quot;</span>&gt;</span>This text is shown on large screens and up.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;show-for-large-only&quot;</span>&gt;</span>This text is shown only on a large screen.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;show-for-xlarge-up&quot;</span>&gt;</span>This text is shown on xlarge screens and up.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;show-for-xlarge-only&quot;</span>&gt;</span>This text is shown only on an xlarge screen.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;show-for-xxlarge-up&quot;</span>&gt;</span>This text is shown on xxlarge screens and up.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-    <span class="tag">&lt;/<span class="title">p</span>&gt;</span></div></code></pre>
-
-      </div>
-      <div class="large-6 columns">
-        <h4>Rendered HTML</h4>
-            <p class="panel">
-          <strong class="show-for-small-only">This text is shown only on a small screen.</strong>
-          <strong class="show-for-medium-up">This text is shown on medium screens and up.</strong>
-          <strong class="show-for-medium-only">This text is shown only on a medium screen.</strong>
-          <strong class="show-for-large-up">This text is shown on large screens and up.</strong>
-          <strong class="show-for-large-only">This text is shown only on a large screen.</strong>
-          <strong class="show-for-xlarge-up">This text is shown on xlarge screens and up.</strong>
-          <strong class="show-for-xlarge-only">This text is shown only on an xlarge screen.</strong>
-          <strong class="show-for-xxlarge-up">This text is shown on xxlarge screens and up.</strong>
-        </p>
-      </div>
-    </div>
-
-
-
-    <h5 id="screen-size-visibility-control-hide-">Screen Size Visibility Control (Hide)</h5>
-    <p>The following text should describe the screen size you aren&#39;t using:</p>
-    <div class="row">
-      <div class="large-6 columns">
-      <h4>HTML</h4>
-    <pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">p</span> <span class="attribute">class</span>=<span class="value">&quot;panel&quot;</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;hide-for-small-only&quot;</span>&gt;</span>You are <span class="tag">&lt;<span class="title">em</span>&gt;</span>not<span class="tag">&lt;/<span class="title">em</span>&gt;</span> on a small screen.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;hide-for-medium-up&quot;</span>&gt;</span>You are <span class="tag">&lt;<span class="title">em</span>&gt;</span>not<span class="tag">&lt;/<span class="title">em</span>&gt;</span> on a medium, large, xlarge, or xxlarge screen.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;hide-for-medium-only&quot;</span>&gt;</span>You are <span class="tag">&lt;<span class="title">em</span>&gt;</span>not<span class="tag">&lt;/<span class="title">em</span>&gt;</span> on a medium screen.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;hide-for-large-up&quot;</span>&gt;</span>You are <span class="tag">&lt;<span class="title">em</span>&gt;</span>not<span class="tag">&lt;/<span class="title">em</span>&gt;</span> on a large, xlarge, or xxlarge screen.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;hide-for-large-only&quot;</span>&gt;</span>You are <span class="tag">&lt;<span class="title">em</span>&gt;</span>not<span class="tag">&lt;/<span class="title">em</span>&gt;</span> on a large screen.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;hide-for-xlarge-up&quot;</span>&gt;</span>You are <span class="tag">&lt;<span class="title">em</span>&gt;</span>not<span class="tag">&lt;/<span class="title">em</span>&gt;</span> on an xlarge screen and up.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;hide-for-xlarge-only&quot;</span>&gt;</span>You are <span class="tag">&lt;<span class="title">em</span>&gt;</span>not<span class="tag">&lt;/<span class="title">em</span>&gt;</span> on an xlarge screen.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;hide-for-xxlarge-up&quot;</span>&gt;</span>You are <span class="tag">&lt;<span class="title">em</span>&gt;</span>not<span class="tag">&lt;/<span class="title">em</span>&gt;</span> on an xxlarge screen.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-    <span class="tag">&lt;/<span class="title">p</span>&gt;</span></div></code></pre>
-
-      </div>
-      <div class="large-6 columns">
-      <h4>Rendered HTML</h4>
-            <p class="panel">
-          <strong class="hide-for-small-only">You are <em>not</em> on a small screen.</strong>
-          <strong class="hide-for-medium-up">You are <em>not</em> on a medium, large, xlarge, or xxlarge screen.</strong>
-          <strong class="hide-for-medium-only">You are <em>not</em> on a medium screen.</strong>
-          <strong class="hide-for-large-up">You are <em>not</em> on a large, xlarge, or xxlarge screen.</strong>
-          <strong class="hide-for-large-only">You are <em>not</em> on a large screen.</strong>
-          <strong class="hide-for-xlarge-up">You are <em>not</em> on an xlarge screen and up.</strong>
-          <strong class="hide-for-xlarge-only">You are <em>not</em> on an xlarge screen.</strong>
-          <strong class="hide-for-xxlarge-up">You are <em>not</em> on an xxlarge screen.</strong>
-            </p>
-      </div>
-    </div>
-
-
-
-    <h5 id="orientation-detection">Orientation Detection</h5>
-    <p>The following text should describe the device orientation you&#39;re using:</p>
-    <div class="row">
-      <div class="large-6 columns">
-      <h4>HTML</h4>
-      <pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">p</span> <span class="attribute">class</span>=<span class="value">&quot;panel&quot;</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;show-for-landscape&quot;</span>&gt;</span>You are in landscape orientation.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;show-for-portrait&quot;</span>&gt;</span>You are in portrait orientation.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-    <span class="tag">&lt;/<span class="title">p</span>&gt;</span></div></code></pre>
-
-      </div>
-      <div class="large-6 columns">
-      <h4>Rendered HTML</h4>
-            <p class="panel">
-              <strong class="show-for-landscape">You are in landscape orientation.</strong>
-              <strong class="show-for-portrait">You are in portrait orientation.</strong>
-            </p>
-      </div>
-    </div>
-
-
-
-    <h5 id="touch-detection">Touch Detection</h5>
-    <p>The following text should describe if you&#39;re using a touch device:</p>
-    <div class="row">
-      <div class="large-6 columns">
-      <h4>HTML</h4>
-      <pre><code class="language-html"><div class="code-container"><span class="tag">&lt;<span class="title">p</span> <span class="attribute">class</span>=<span class="value">&quot;panel&quot;</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;show-for-touch&quot;</span>&gt;</span>You are on a touch-enabled device.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-      <span class="tag">&lt;<span class="title">strong</span> <span class="attribute">class</span>=<span class="value">&quot;hide-for-touch&quot;</span>&gt;</span>You are not on a touch-enabled device.<span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
-    <span class="tag">&lt;/<span class="title">p</span>&gt;</span></div></code></pre>
-
-      </div>
-      <div class="large-6 columns">
-      <h4>Rendered HTML</h4>
-            <p class="panel">
-              <strong class="show-for-touch">You are on a touch-enabled device.</strong>
-              <strong class="hide-for-touch">You are not on a touch-enabled device.</strong>
-            </p>
-      </div>
-    </div>
   </div>
 </div>
 {% endblock base_body %}

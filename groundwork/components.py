@@ -148,7 +148,7 @@ COMPONENTS['reveal'] = Component(
     js=['foundation.reveal'], sass=['reveal']
 )
 COMPONENTS['slider'] = Component(
-    js=['foundation.slider']
+    js=['foundation.slider'], sass=['range-slider']
 )
 COMPONENTS['switches'] = Component(
     sass=['switches']
