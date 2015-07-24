@@ -1,0 +1,28 @@
+{% load groundwork %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    {% for name, content in meta.items %}
+      <meta name="{{ name }}" content="{{ content }}" />
+    {% endfor %}
+
+    {% block meta %}{% endblock %}
+
+    <title>{% block page_title %}{% endblock %}</title>
+
+    {% block base_css %}{% groundwork_css %}{% endblock %}
+
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    {% block base_body %}{% endblock %}
+
+    {% block base_js %}{% groundwork_js %}{% endblock %}
+
+    {% block foundation_js_init %}<script>$(document).foundation();</script>{% endblock %}
+  </body>
+</html>
