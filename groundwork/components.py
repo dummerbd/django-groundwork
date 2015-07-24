@@ -176,14 +176,27 @@ COMPONENTS['visibility'] = Component(
 )
 
 
+# This provides a set of frequent component builds that can be used instead of
+# listing all the individual components, which can be useful when you want to
+# slim down your build to only the components you need.
+SHORTCUTS = {}
+
+_all_comps = [k for k, c in COMPONENTS.items() if c.default]
+SHORTCUTS['all'] = _all_comps
+SHORTCUTS['foundation_only'] = [k for k in _all_comps if k not in [
+    'jquery', 'modernizr', 'modernizr-slim'
+]]
+SHORTCUTS['no_js'] = [k for k, c in COMPONENTS.items() if c.default and c.js == []]
+
+
 def flatten(lst):
     return reduce(lambda el, lst: el + lst, lst, [])
 
 
 def _get_components():
     components = get_setting('components')
-    if components == 'all':
-        components = [k for k, c in COMPONENTS.items() if c.default]
+    if type(components) == str:
+        return SHORTCUTS.get(components, None)
     return components
 
 
