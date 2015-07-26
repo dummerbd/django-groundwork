@@ -1,0 +1,19 @@
+{
+  "name": "foundation-icon-fonts",
+  "version": "3.0.0",
+  "main": [
+    "foundation-icons.css"
+  ],
+  "ignore": [],
+  "homepage": "https://github.com/featherweightweb/foundation-icon-fonts",
+  "_release": "3.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v3.0.0",
+    "commit": "383c9ddb410096f6fa7013fa734e272a218d4bda"
+  },
+  "_source": "git://github.com/featherweightweb/foundation-icon-fonts.git",
+  "_target": "3.0.0",
+  "_originalSource": "featherweightweb/foundation-icon-fonts",
+  "_direct": true
+}
