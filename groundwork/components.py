@@ -66,6 +66,9 @@ COMPONENTS['jquery-cookie'] = BaseComponent(
 COMPONENTS['fastclick'] = BaseComponent(
     js=['fastclick/lib/fastclick'], default=False
 )
+COMPONENTS['foundation-icons'] = BaseComponent(
+    sass=['foundation-icons']
+)
 COMPONENTS['foundation'] = Component(
     js=['foundation']
 )

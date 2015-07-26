@@ -51,7 +51,10 @@ class Tool:
         """
         Get a list of file paths that contain Sass code.
         """
-        return list(get_setting('sass_include_paths')) + [get_setting('foundation_sass_path')]
+        paths = [get_setting('foundation_sass_path')]
+        paths += list(get_setting('sass_include_paths'))
+        paths += list(get_setting('sass_extra_include_paths'))
+        return paths
 
     def get_js_files(self):
         """

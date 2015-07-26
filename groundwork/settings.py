@@ -26,7 +26,10 @@ DEFAULT_SETTINGS = {
         'default_app',
 
     'GROUNDWORK_SASS_INCLUDE_PATHS':
-        [path.join(BASE_DIR, 'scss')],
+        [path.join(BASE_DIR, 'scss'), path.join(BASE_DIR, 'libs/foundation-icon-fonts')],
+
+    'GROUNDWORK_SASS_EXTRA_INCLUDE_PATHS':
+        [],
 
     'GROUNDWORK_SASS_STATIC_PATH':
         'groundwork/css/foundation.css',
