@@ -1,18 +1,22 @@
 from django.conf.urls import patterns, url
 from django.views.generic import TemplateView
 
+from groundwork import ICONS
 
-INDEX = 'groundwork/examples/kitchen_sink.html'
-ICONS = 'groundwork/examples/icons.html'
+
+class IconView(TemplateView):
+    def get_context_data(self):
+        return {'icons': ICONS}
 
 
 urlpatterns = patterns(
     '',
-    url(regex=r'^$',
-        view=TemplateView.as_view(template_name=INDEX),
+
+    url(r'^$',
+        TemplateView.as_view(template_name='groundwork/examples/kitchen_sink.html'),
         name="groundwork_index"),
 
-    url(regex=r'^icons/$',
-        view=TemplateView.as_view(template_name=ICONS),
+    url(r'^icons/$',
+        IconView.as_view(template_name='groundwork/examples/icons.html'),
         name="groundwork_icons"),
 )

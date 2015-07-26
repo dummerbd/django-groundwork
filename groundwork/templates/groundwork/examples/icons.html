@@ -1,0 +1,40 @@
+{% extends 'groundwork/base.html' %}
+
+{% load static %}
+
+{% block head %}
+<style>
+  .size-1 { font-size: 12px; }
+  .size-2 { font-size: 14px; }
+  .size-3 { font-size: 16px; }
+  .size-4 { font-size: 18px; }
+  .size-5 { font-size: 24px; }
+  .size-6 { font-size: 36px; }
+  .size-7 { font-size: 48px; }
+  .size-8 { font-size: 60px; }
+</style>
+{% endblock head %}
+
+{% block base_body %}
+<div class="row">
+  <div class="small-12 columns">
+    <h1>Foundation Icons contains {{icons|length}} glyphs:</h1>
+    {% for i in icons %}
+      <hr>
+      <div class="row">
+        <div class="small-4 columns">
+          <input type="text" readonly="readonly" onClick="this.select();" value="{{i}}" />
+        </div>
+        <div class="small-1 column"><i class="size-1 {{i}}"></i></div>
+        <div class="small-1 column"><i class="size-2 {{i}}"></i></div>
+        <div class="small-1 column"><i class="size-3 {{i}}"></i></div>
+        <div class="small-1 column"><i class="size-4 {{i}}"></i></div>
+        <div class="small-1 column"><i class="size-5 {{i}}"></i></div>
+        <div class="small-1 column"><i class="size-6 {{i}}"></i></div>
+        <div class="small-1 column"><i class="size-7 {{i}}"></i></div>
+        <div class="small-1 column"><i class="size-8 {{i}}"></i></div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock base_body %}
