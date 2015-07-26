@@ -12,20 +12,34 @@ register = template.Library()
 
 
 @register.simple_tag
-def groundwork_js():
+def groundwork_js(minify=None):
     """
-    Render a script tag that links to the groundwork JS build.
+    Render a script tag that links to the groundwork Js build.
+
+    An optional `minify` argument determines if this will include the minified
+    or full source. By default, the full source is included when `DEBUG=True`
+    and the minified source is included when `DEBUG=False`.
     """
-    path = 'js_min_static_path' if settings.DEBUG else 'js_static_path'
+    if minify is None:
+        minify = not settings.DEBUG
+
+    path = 'js_min_static_path' if minify else 'js_static_path'
     url = static(get_setting(path))
     return '<script type="text/javascript" src="%s"></script>' % url
 
 
 @register.simple_tag
-def groundwork_css():
+def groundwork_css(minify=None):
     """
-    Render a style tag that links to the groundwork SASS build.
+    Render a style tag that links to the groundwork Sass build.
+
+    An optional `minify` argument determines if this will include the minified
+    or full source. By default, the full source is included when `DEBUG=True`
+    and the minified source is included when `DEBUG=False`.
     """
-    path = 'sass_min_static_path' if settings.DEBUG else 'sass_static_path'
+    if minify is None:
+        minify = not settings.DEBUG
+
+    path = 'sass_min_static_path' if minify else 'sass_static_path'
     url = static(get_setting(path))
     return '<link rel="stylesheet" type="text/css" href="%s" />' % url
