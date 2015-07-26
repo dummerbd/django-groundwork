@@ -1,12 +1,12 @@
 {
   "name": "django-groundwork",
-  "version": "0.1.0",
+  "version": "1.0.0-beta",
   "homepage": "https://github.com/dummerbd/django-groundwork",
   "authors": [
-    "Ben Dummer <dummerbenjamin@gmail.com>"
+    "Benjamin Dummer <dummerbenjamin@gmail.com>"
   ],
   "main": "setup.py install",
-  "license": "BSD",
+  "license": "MIT",
   "dependencies": {
     "foundation": "zurb/bower-foundation#~5.5.2"
   }
