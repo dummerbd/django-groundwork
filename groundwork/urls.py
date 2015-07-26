@@ -2,11 +2,10 @@ from django.conf.urls import patterns, url
 from django.views.generic import TemplateView
 
 
-INDEX = 'groundwork/examples/index.html'
+INDEX = 'groundwork/examples/kitchen_sink.html'
 ICONS = 'groundwork/examples/icons.html'
 
 
-# Test patern, renders Zurb Foundation default page using base template
 urlpatterns = patterns(
     '',
     url(regex=r'^$',

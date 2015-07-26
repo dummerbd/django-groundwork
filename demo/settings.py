@@ -39,14 +39,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'demo.urls'
+ROOT_URLCONF = 'groundwork.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'demo/templates')
-        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -58,8 +55,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'demo.wsgi.application'
 
 DATABASES = {
     'default': {
