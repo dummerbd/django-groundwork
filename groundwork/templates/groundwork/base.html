@@ -19,7 +19,13 @@
     {% block head %}{% endblock %}
   </head>
   <body>
-    {% block base_body %}{% endblock %}
+    {% block base_body %}
+    <div class="row">
+      <div class="small-12 columns">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    {% endblock base_body %}
 
     {% block base_js %}{% groundwork_js %}{% endblock %}
 
