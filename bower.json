@@ -9,6 +9,6 @@
   "license": "MIT",
   "dependencies": {
     "foundation": "zurb/bower-foundation#~5.5.2",
-    "foundation-icon-fonts": "featherweightweb/foundation-icon-fonts#3.0.1"
+    "foundation-icon-fonts": "featherweightweb/foundation-icon-fonts#3.0.2"
   }
 }

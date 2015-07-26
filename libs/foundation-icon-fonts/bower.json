@@ -1,6 +1,6 @@
 {
   "name": "foundation-icon-fonts",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "main": ["foundation-icons.css"],
   "ignore": [
     "example/",

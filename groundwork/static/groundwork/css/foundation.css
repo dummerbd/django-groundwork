@@ -405,7 +405,7 @@ th {
   font-style: normal;
 }
 
-[class^="fi-"]:before {
+[class*="fi-"]:before {
   font-family: "foundation-icons";
   font-style: normal;
   font-weight: normal;
