@@ -7,15 +7,6 @@ working with Zurb Foundation. Many common django components like paginators,
 messages, and forms can be used natively with this package. These components
 get wrapped in nice pretty Foundation goodness.
 
-Naming Note
------------
-This package was called Groundwork instead of Foundation to avoid collision
-with other packages of that name (or similar). It also symbolizes the simplicity
-of the tools this package provides. Like Foundation itself, this package just
-provides you with the groundwork needed to make sexy web apps. It is not
-intended to be an entire framework or provide programmtic equivalences to all
-the foundation components.
-
 
 Quick Start
 -----------
